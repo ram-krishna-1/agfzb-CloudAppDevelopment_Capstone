@@ -16,7 +16,7 @@ def get_request(url, api_key=None, **kwargs):
                                     params=kwargs, auth = HTTPBasicAuth("apikey", api_key))
         # Call get method of requests library with URL and parameters
         else:
-            request.get(url, params = kwargs)
+            requests.get(url, params = kwargs)
     except:
         # If any error occurs
         print("Network exception occurred")
@@ -29,7 +29,7 @@ def get_request(url, api_key=None, **kwargs):
 # e.g., response = requests.post(url, params=kwargs, json=payload)
 def post_request(url, json_payload, **kwargs):
     response = requests.post(url, headers={'Content-Type': 'application/json'},
-                                json=json_payload, params=kwargs))
+                                json=json_payload, params=kwargs)
     json_data = json.loads(response.text)
     return json_data
 
