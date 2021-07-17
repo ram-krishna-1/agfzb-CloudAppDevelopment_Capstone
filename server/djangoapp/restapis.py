@@ -1,6 +1,6 @@
 import requests
 import json
-from .models import CarDealer
+from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
 
 
@@ -11,12 +11,8 @@ def get_request(url, api_key=None, **kwargs):
     print(kwargs)
     print("From {} ".format(url))
     try:
-        if api_key:
-            response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params=kwargs, auth = HTTPBasicAuth("apikey", api_key))
-        # Call get method of requests library with URL and parameters
-        else:
-            requests.get(url, params = kwargs)
+        response = requests.get(url, headers={'Content-Type': 'application/json'},
+                                    params=kwargs)
     except:
         # If any error occurs
         print("Network exception occurred")
@@ -63,9 +59,9 @@ def get_dealers_from_cf(url, **kwargs):
 # - Parse JSON results into a DealerView object list
 def get_dealer_reviews_from_cf(url, dealerId):
     results = []
-    json_request = get_request(url, dealerId = dealerId)
+    json_result = get_request(url, dealerId = dealerId)
     if json_result:
-        reviews = json_result["entries"]
+        reviews = json_result["docs"]
         for review_s in reviews:
             review_obj = DealerReview(car_make=review_s['car_make'], car_model=review_s['car_model'], 
             car_year=review_s['car_year'], id=review_s['id'], dealership=review_s['dealership'], 
