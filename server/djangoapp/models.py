@@ -63,7 +63,7 @@ class CarDealer(object):
         self.zip = zip
 
     def __str__(self):
-        return "Dealer name: " + self.full_name
+        return "Dealer name: " + self.short_name
 
 # <HINT> Create a plain Python class `DealerReview` to hold review data
 class DealerReview(object):
