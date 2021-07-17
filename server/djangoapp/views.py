@@ -79,7 +79,7 @@ def registration_request(request):
 def get_dealerships(request):
     if request.method == "GET":
         context = {}
-        url = "https://0c99453f.us-south.apigw.appdomain.cloud/api/dealerships/dealer-get"
+        url = "https://0c99453f.us-south.apigw.appdomain.cloud/api/dealership"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
