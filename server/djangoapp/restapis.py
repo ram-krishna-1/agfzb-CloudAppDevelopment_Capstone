@@ -9,13 +9,20 @@ from requests.auth import HTTPBasicAuth
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, api_key=None, **kwargs):
     print(kwargs)
-    print("From {} ".format(url))
+    print("GET from {} ".format(url))
     try:
-        response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params=kwargs)
+        # Call get method of requests library with URL and parameters
+        if api_key:
+            # Basic authentication GET
+            response = requests.get(url, params=kwargs, headers={'Content-Type': 'application/json'},
+                                    auth=HTTPBasicAuth('apikey', api_key))
+        else:
+            # no authentication GET
+            response = requests.get(url, params=kwargs, headers={'Content-Type': 'application/json'})
     except:
         # If any error occurs
         print("Network exception occurred")
+    print(response.content)
     status_code = response.status_code
     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
