@@ -94,7 +94,7 @@ def get_dealerships(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
-        url = "https://0c99453f.us-south.apigw.appdomain.cloud/api/review/"
+        url = "https://0c99453f.us-south.apigw.appdomain.cloud/api/reviews/"
         reviews = get_dealer_reviews_from_cf(url, dealer_id)
         context["review_list"] = reviews
         context["dealer_id"] = dealer_id
@@ -108,9 +108,9 @@ def add_review(request, dealer_id):
         return render(request, "/djangoapp/add_review.html", context)
     else:
         if request.user.is_authenticated:
-            url = "https://0c99453f.us-south.apigw.appdomain.cloud/api/review/"
+            url = "https://0c99453f.us-south.apigw.appdomain.cloud/api/reviews/"
             review = {}
-            review["id"] = 1
+            review["id"] = random.randInt(12, 1111111)
             review["name"] = request.user.username
             review["dealership"] =  dealer_id
             review["review"] = request.POST["review"]
