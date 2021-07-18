@@ -24,22 +24,33 @@ class CarMake(models.Model):
 # - Any other fields you would like to include in car model
 # - __str__ method to print a car make object
 class CarModel(models.Model):
-    make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
-    name = models.CharField(null = False, max_length = 60)
-    dealer_id = models.IntegerField(null = False)
+    id = models.AutoField(primary_key=True)
+    make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
+    dealer_id = models.IntegerField(null=False)
+    name = models.CharField(null=False, max_length=50)
     year = models.DateField()
 
-    SUV = "suv"
-    SEDAN = "sedan"
-    WAGON = "wagon"
-    Car_Types = [
-        (SEDAN, "Sedan"),
-        (SUV, "SUV"),
-        (WAGON, "Wagon")
+    SUV = 'SUV'
+    SEDAN = 'Sedan'
+    WAGON = 'WAGON'
+    TYPES = [
+        (SUV, 'suv'),
+        (SEDAN, 'sedan'),
+        (WAGON, 'wagon'),
     ]
-    type = models.CharField(null = False, max_length = 30, choices = Car_Types, default = SEDAN)
+
+    type = models.CharField(
+        null=False,
+        max_length=20,
+        choices=TYPES,
+        default=SEDAN
+    )
+
     def __str__(self):
-        return 'Name: ' + self.name + ' dealer id: ' + str(self.dealer_id) + ' type: ' + self.type + ' year: ' + str(self.year)
+        return self.make.name + " " + \
+               self.name + ", " + \
+               str(self.year.year) + "(" + \
+               "DealerID: " + str(self.dealer_id) + ")"
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 class CarDealer:
 
@@ -68,7 +79,7 @@ class CarDealer:
 
 # <HINT> Create a plain Python class `DealerReview` to hold review data
 class DealerReview(object):
-    def __init__(self, car_make, car_model, car_year, id, dealership, name, purchase, purchase_date, review, sentiment):
+    def __init__(self, dealership=None, name=None, purchase=None, review=None, purchase_date=None, car_make=None, car_model=None, car_year=None):
         self.car_make = car_make
         self.car_model = car_model
         self.car_year = car_year
@@ -78,7 +89,7 @@ class DealerReview(object):
         self.purchase = purchase
         self.purchase_date = purchase_date
         self.review = review
-        self.sentiment = sentiment
+        self.sentiment = None
     
     def __str__(self):
         return "Review: " + self.review + ", Sentiment: " + self.sentiment
