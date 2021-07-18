@@ -10,39 +10,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
 </head>
-    <body>
-    <div class="container-fluid">
-        <h2>Add a review</h2>
-        <form action = "{% url "djangoapp:add_review" dealer_id %}" method ="POST">
+<body>
+    <!--Add review form here -->
+    <form action="{% url 'djangoapp:addreview' dealer_id %}" method="post">
+            {% csrf_token %}
             <div class="form-group">
-                <label for="userInput">Enter your name</label>
-                <input type="text" class="form-control" id="userInput" name="name" value="{{user.first_name}} {{user.last_name}}" required>
+                <label for="content">  Enter the review content:</label>
+                <textarea class="form-control" id="review" name="review" rows="2" required></textarea>
             </div>
-            <br><br/>
+            <div class="form-group form-check">
+                <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                <label for="purchasecheck"> Did you purchased the car from this dealership? (select car information below if checked)</label>
+            </div>
             <div class="form-group">
-                <label for="reviewInput">Enter the review content</label>
-                <textarea class="form-control" id="reviewInput" placeholder="Your review here..." name="review" required></textarea>
-            </div>
-            <br><br/>
-            <div class="form-group">
-                <label for="purchasestatus">Have you purchased this car? Select infomation below only if checked</label>
-                <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasestatus">
-            </div>
-            <br><br/>
-            <div class="form-group">
-                <label for="purchaseDateInput">Select Your Purchase Date: </label>
-                <input class="form-check-input" type="date" name="purchasedate" id="purchaseDateInput">
-            </div>
-            <br><br/>
-            <div class="form-inline">
-                <label for="car"><strong>Select your car (model-make-year):</strong></label>
-                <select id="car" name="car" class="form-control ml-2" required>
+                <label for="car">  Select your car (model-make-year):</label>
+                <select name="car" id="car" class="form-select">
                     {% for car in cars %}
-                    <option selected value={{car.id}}>{{ car.name }}-{{ car.make.name }}-{{ car.year | date:"Y" }}</option>
+                        <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
                     {% endfor %}
                 </select>
             </div>
+            <div class="form-group"></div>
+                <label for="purchasedate">  Select your purchase date:</label>
+                <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <script type="text/javascript">
+                $('.date-own').datepicker({
+                   format: 'mm/dd/yyyy'
+                 });
+           </script>
         </form>
-    </div>
-    </body>
 </html>
