@@ -14,11 +14,11 @@ def get_request(url, api_key=None, **kwargs):
         # Call get method of requests library with URL and parameters
         if api_key:
             # Basic authentication GET
-            response = requests.get(url, params=kwargs, headers={'Content-Type': 'application/json'},
-                                    auth=HTTPBasicAuth('apikey', api_key))
+            response = requests.get(url, headers={'Content-Type': 'application/json'},
+                                    auth=HTTPBasicAuth('apikey', api_key), params=kwargs)
         else:
             # no authentication GET
-            response = requests.get(url, params=kwargs, headers={'Content-Type': 'application/json'})
+            response = requests.get(url, headers={'Content-Type': 'application/json'}, params=kwargs)
     except:
         # If any error occurs
         print("Network exception occurred")
@@ -42,7 +42,12 @@ def post_request(url, json_payload, **kwargs):
 # - Parse JSON results into a CarDealer object list
 def get_dealers_from_cf(url, **kwargs):
     results = []
-    # Call get_request with a URL parameter
+    # dealer_obj = CarDealer(address="3 Nova Court", city="El Paso", full_name="Sample Full Name",
+    #                                id=11, lat=55.5555, long=44.4444,
+    #                                short_name="Sample Short Name",
+    #                                st="TX", zip=75035)
+    # results.append(dealer_obj)
+    #Call get_request with a URL parameter
     json_result = get_request(url)
     if json_result:
         # Get the row list in JSON as dealers
@@ -50,6 +55,7 @@ def get_dealers_from_cf(url, **kwargs):
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
+            # dealer_doc = dealer["docs"]
             # Create a CarDealer object with values in `doc` object
             dealer_obj = CarDealer(address=dealer["address"], city=dealer["city"], full_name=dealer["full_name"],
                                    id=dealer["id"], lat=dealer["lat"], long=dealer["long"],
