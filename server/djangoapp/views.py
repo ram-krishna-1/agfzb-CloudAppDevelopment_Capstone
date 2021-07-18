@@ -7,7 +7,7 @@ from . import models
 # from .restapis import related methods
 from . import restapis
 from .models import CarModel
-from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, create_new_review
+from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, post_request
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
