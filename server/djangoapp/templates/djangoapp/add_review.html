@@ -23,7 +23,7 @@
                 <label for="purchasecheck"> Did you purchased the car from this dealership? (select car information below if checked)</label>
             </div>
             <div class="form-group">
-                <label for="car">  Select your car (model-make-year):</label>
+                <label for="car">  What car did you pourchase?</label>
                 <select name="car" id="car" class="form-select">
                     {% for car in cars %}
                         <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
